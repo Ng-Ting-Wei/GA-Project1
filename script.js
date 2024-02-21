@@ -1,6 +1,23 @@
+// created variables
+const scoreText = document.getElementById("score");
+const playerStatText = document.getElementById("playerStat");
+
+const playerText = document.getElementById("playerText");
+const enemyText = document.getElementById("enemyText");
+const npcStat = document.getElementById("npcStat");
+
+const attButton = document.querySelector("#attButton");
+const defButton = document.querySelector("#defButton");
+const quickbutton = document.querySelector("#quickbutton");
+
+let level = 1;
+let limit = 3;
+let score = 0;
+let player;
+let enemy;
+
 // create two player can also well
 // level up system
-// random stat generation
 class Character {
   Experience = 0;
   constructor(charc) {
@@ -35,6 +52,7 @@ class Character {
   }
 }
 
+// characters created at the start
 let warriorPlayer = new Character({
   name: "Maximus",
   hp: 6,
@@ -52,9 +70,10 @@ let soldierEnemy = new Character({
 });
 
 function playerStat() {
-  return `Character: ${warriorPlayer.name} | Health: ${warriorPlayer.hp} | Attack: ${warriorPlayer.damage} | Defense: ${warriorPlayer.defense} | Speed: ${warriorPlayer.speed}`;
+  return `Character: ${warriorPlayer.name} lvl ${level} | Health: ${warriorPlayer.hp} | Attack: ${warriorPlayer.damage} | Defense: ${warriorPlayer.defense} | Speed: ${warriorPlayer.speed}`;
 }
 
+// random stat generation
 function gameSet() {
   if (soldierEnemy.hp <= 0) {
     soldierEnemy = new Character({
@@ -64,32 +83,23 @@ function gameSet() {
       defense: Math.floor(Math.random() * 3) + 1,
       speed: Math.floor(Math.random() * 3) + 1,
     });
-    warriorPlayer.Experience += 1;
-    scoreText.textContent = `Score: ${warriorPlayer.Experience}`;
+    warriorPlayer.Experience += Math.floor(Math.random() * 2) + 1;
+    experiencePlayer(warriorPlayer.Experience);
+    score += 1;
+    scoreText.textContent = `Score: ${score} | Experience: ${warriorPlayer.Experience}`;
     return `Soldier was defeated! More Soldier arrived!`;
   }
 }
 
-// hp: Math.floor(Math.random() * 4) + 1,
-// damage: Math.floor(Math.random() * 3) + 1,
-// defense: Math.floor(Math.random() * 3) + 1,
-// speed: Math.floor(Math.random() * 3) + 1,
-
-// break
-const scoreText = document.getElementById("score");
-const playerStatText = document.getElementById("playerStat");
-playerStatText.textContent = playerStat();
-
-const playerText = document.getElementById("playerText");
-const enemyText = document.getElementById("enemyText");
-const npcStat = document.getElementById("npcStat");
-
-const attButton = document.querySelector("#attButton");
-const defButton = document.querySelector("#defButton");
-const quickbutton = document.querySelector("#quickbutton");
-
-let player;
-let enemy;
+function experiencePlayer(amount) {
+  let exp = amount / limit;
+  if (exp == 1) {
+    warriorPlayer.Experience -= limit;
+    limit *= 3;
+    level += 1;
+    playerStat();
+  }
+}
 
 attButton.addEventListener("click", function (event) {
   player = "Attack";
@@ -147,3 +157,6 @@ function conditionWinLose() {
     return warriorPlayer.defend(soldierEnemy);
   }
 }
+
+// done at start
+playerStatText.textContent = playerStat();
