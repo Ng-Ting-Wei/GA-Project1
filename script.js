@@ -1,104 +1,112 @@
 // create two player can also well
 // level up system
-let character1 = {
-  namePlayer: "fighter",
-  health: 6,
-  attack: 2,
-  defense: 1,
-  speed: 1,
-  experience: 0,
-  progress: 0,
-};
-
-let character2 = {
-  namePlayer: "warrior",
-  health: 6,
-  attack: 2,
-  defense: 1,
-  speed: 1,
-  experience: 0,
-  progress: 0,
-};
-
 // random stat generation
-let enemy1 = {
-  nameEnemy: "soldier",
-  health: 1,
-  attack: 1,
+class Character {
+  Experience = 0;
+  constructor(charc) {
+    this.name = charc.name;
+    this.hp = charc.hp;
+    this.damage = charc.damage;
+    this.defense = charc.defense;
+    this.speed = charc.speed;
+  }
+  getName() {
+    return this.name;
+  }
+  getDamage() {
+    return this.damage;
+  }
+  getDefense() {
+    return this.defense;
+  }
+  getSpeed() {
+    return this.speed;
+  }
+  getHealth() {
+    return this.hp;
+  }
+  attack(charc) {
+    charc.hp = charc.hp - this.damage;
+    return `${this.name} deal ${this.damage} damage to ${charc.name}`;
+  }
+  defend(charc) {
+    this.hp = this.hp - charc.damage;
+    return `${this.name} take ${charc.damage} damage from ${charc.name}`;
+  }
+}
+
+let warriorPlayer = new Character({
+  name: "Maximus",
+  hp: 6,
+  damage: 2,
+  defense: 2,
+  speed: 2,
+});
+
+let soldierEnemy = new Character({
+  name: "Soldier",
+  hp: 2,
+  damage: 1,
   defense: 1,
   speed: 1,
-};
+});
 
-class Character {
-  constructor(health, attack, defense, speed) {
-    (this.health = health),
-      (this.attack = attack),
-      (this.defense = defense),
-      (this.speed = speed);
+function gameSet() {
+  if (soldierEnemy.hp <= 0) {
+    soldierEnemy = new Character({
+      name: "Soldier",
+      hp: Math.floor(Math.random() * 4) + 1,
+      damage: Math.floor(Math.random() * 3) + 1,
+      defense: Math.floor(Math.random() * 3) + 1,
+      speed: Math.floor(Math.random() * 3) + 1,
+    });
+    warriorPlayer.Experience += 1;
+    scoreText.textContent = `Score: ${warriorPlayer.Experience}`;
+    return `Soldier was defeated! More Soldier arrived!`;
   }
 }
 
-class Warrior extends Character {
-  constructor(health = 6, attack = 1, defense = 1, speed = 1) {
-    super(health, attack, defense, speed);
-  }
-  takeDamage(damage) {
-    this.health = this.health - damage;
-    return this.health;
-  }
-  dealDamage(defense) {
-    this.attack = this.attack - defense;
-    return this.attack;
-  }
-}
+// hp: Math.floor(Math.random() * 4) + 1,
+// damage: Math.floor(Math.random() * 3) + 1,
+// defense: Math.floor(Math.random() * 3) + 1,
+// speed: Math.floor(Math.random() * 3) + 1,
 
-// Math.floor(Math.random() * 2)
-
-const warrior1 = new Warrior();
-
-// console.log(warrior1);
-// const attacking = warrior1.dealDamage(1);
-// console.log(attacking);
-// const defending = warrior1.takeDamage(2);
-// console.log(defending);
+// break
+const scoreText = document.getElementById("score");
 
 const playerText = document.getElementById("playerText");
 const enemyText = document.getElementById("enemyText");
 const npcStat = document.getElementById("npcStat");
 
+const attButton = document.querySelector("#attButton");
+const defButton = document.querySelector("#defButton");
+const quickbutton = document.querySelector("#quickbutton");
 let player;
 let enemy;
 
-console.log(playerText);
-function attackButton() {
+attButton.addEventListener("click", function (event) {
   player = "Attack";
   enemyTurn();
-
   playerText.textContent = `Player: ${player}`;
   enemyText.textContent = `Enemy: ${enemy}`;
   npcStat.textContent = conditionWinLose();
+});
 
-  // const defending = warrior1.takeDamage(2);
-  // console.log(defending);
-}
-
-function defendButton() {
+defButton.addEventListener("click", function (event) {
   player = "Defend";
   enemyTurn();
-
   playerText.textContent = `Player: ${player}`;
   enemyText.textContent = `Enemy: ${enemy}`;
   npcStat.textContent = conditionWinLose();
-}
+});
 
-function quickButton() {
+quickbutton.addEventListener("click", function (event) {
   player = "Quick Attack";
   enemyTurn();
-
   playerText.textContent = `Player: ${player}`;
   enemyText.textContent = `Enemy: ${enemy}`;
   npcStat.textContent = conditionWinLose();
-}
+});
 
 function enemyTurn() {
   const num = Math.floor(Math.random() * 3) + 1;
@@ -123,14 +131,12 @@ function conditionWinLose() {
     (player == "Quick Attack" && enemy == "Defend") ||
     (player == "Defend" && enemy == "Attack")
   ) {
-    return "You deal damage";
-  }
-  // if (
-  //   (player == "Attack" && enemy == "Defend") ||
-  //   (player == "Defend" && enemy == "Quick Attack") ||
-  //   (player == "Quick Attack" && enemy == "Attack")
-  // )
-  else {
-    return "You take damage";
+    return warriorPlayer.attack(soldierEnemy), gameSet();
+  } else if (
+    (player == "Attack" && enemy == "Defend") ||
+    (player == "Defend" && enemy == "Quick Attack") ||
+    (player == "Quick Attack" && enemy == "Attack")
+  ) {
+    return warriorPlayer.defend(soldierEnemy);
   }
 }

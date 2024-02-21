@@ -12,7 +12,7 @@ body {
   position: relative;
 }
 
-.attButton {
+#attButton {
   width: 150px;
   height: 50px;
   position: absolute;
@@ -20,7 +20,7 @@ body {
   bottom: 100px;
 }
 
-.defButton {
+#defButton {
   width: 150px;
   height: 50px;
   position: absolute;
@@ -28,7 +28,7 @@ body {
   bottom: 100px;
 }
 
-.quckbutton {
+#quickbutton {
   width: 150px;
   height: 50px;
   position: absolute;
