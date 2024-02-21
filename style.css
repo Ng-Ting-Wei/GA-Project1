@@ -1,0 +1,62 @@
+body {
+  background: #210044;
+}
+
+#canvas {
+  display: block;
+  background: #c5780d;
+  border: 2px solid #000000;
+  margin: auto;
+  height: 600px;
+  width: 600px;
+  position: relative;
+}
+
+.attButton {
+  width: 150px;
+  height: 50px;
+  position: absolute;
+  left: 100px;
+  bottom: 100px;
+}
+
+.defButton {
+  width: 150px;
+  height: 50px;
+  position: absolute;
+  right: 100px;
+  bottom: 100px;
+}
+
+.quckbutton {
+  width: 150px;
+  height: 50px;
+  position: absolute;
+  right: 220px;
+  bottom: 30px;
+}
+
+.nameP {
+  font-size: larger;
+  text-align: center;
+  position: relative;
+  border: 2px solid black;
+}
+
+.npcStatus {
+  font-size: x-large;
+  text-align: center;
+  position: relative;
+  top: 50px;
+  color: silver;
+  border: 2px solid black;
+}
+
+.score1 {
+  font-size: x-large;
+  text-align: center;
+  position: relative;
+  top: 3%;
+  color: white;
+  border: 2px solid black;
+}
