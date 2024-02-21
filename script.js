@@ -62,29 +62,42 @@ const warrior1 = new Warrior();
 // const defending = warrior1.takeDamage(2);
 // console.log(defending);
 
-const playerText = document.querySelector("#playerText");
-const enemyText = document.querySelector("#enemyText");
-const npcStat = document.querySelector("#npcStat");
+const playerText = document.getElementById("playerText");
+const enemyText = document.getElementById("enemyText");
+const npcStat = document.getElementById("npcStat");
 
 let player;
 let enemy;
 
+console.log(playerText);
 function attackButton() {
   player = "Attack";
-  console.log(player);
+  enemyTurn();
+
+  playerText.textContent = `Player: ${player}`;
+  enemyText.textContent = `Enemy: ${enemy}`;
+  npcStat.textContent = conditionWinLose();
+
   // const defending = warrior1.takeDamage(2);
   // console.log(defending);
 }
 
 function defendButton() {
   player = "Defend";
+  enemyTurn();
 
-  console.log(player);
+  playerText.textContent = `Player: ${player}`;
+  enemyText.textContent = `Enemy: ${enemy}`;
+  npcStat.textContent = conditionWinLose();
 }
 
 function quickButton() {
   player = "Quick Attack";
-  console.log(player);
+  enemyTurn();
+
+  playerText.textContent = `Player: ${player}`;
+  enemyText.textContent = `Enemy: ${enemy}`;
+  npcStat.textContent = conditionWinLose();
 }
 
 function enemyTurn() {
@@ -111,11 +124,13 @@ function conditionWinLose() {
     (player == "Defend" && enemy == "Attack")
   ) {
     return "You deal damage";
-  } else if (
-    (player == "Attack" && enemy == "Defend") ||
-    (player == "Defend" && enemy == "Quick Attack") ||
-    (player == "Quick Attack" && enemy == "Attack")
-  ) {
+  }
+  // if (
+  //   (player == "Attack" && enemy == "Defend") ||
+  //   (player == "Defend" && enemy == "Quick Attack") ||
+  //   (player == "Quick Attack" && enemy == "Attack")
+  // )
+  else {
     return "You take damage";
   }
 }
