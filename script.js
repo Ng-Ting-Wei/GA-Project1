@@ -51,6 +51,10 @@ let soldierEnemy = new Character({
   speed: 1,
 });
 
+function playerStat() {
+  return `Character: ${warriorPlayer.name} | Health: ${warriorPlayer.hp} | Attack: ${warriorPlayer.damage} | Defense: ${warriorPlayer.defense} | Speed: ${warriorPlayer.speed}`;
+}
+
 function gameSet() {
   if (soldierEnemy.hp <= 0) {
     soldierEnemy = new Character({
@@ -73,6 +77,8 @@ function gameSet() {
 
 // break
 const scoreText = document.getElementById("score");
+const playerStatText = document.getElementById("playerStat");
+playerStatText.textContent = playerStat();
 
 const playerText = document.getElementById("playerText");
 const enemyText = document.getElementById("enemyText");
@@ -81,6 +87,7 @@ const npcStat = document.getElementById("npcStat");
 const attButton = document.querySelector("#attButton");
 const defButton = document.querySelector("#defButton");
 const quickbutton = document.querySelector("#quickbutton");
+
 let player;
 let enemy;
 
