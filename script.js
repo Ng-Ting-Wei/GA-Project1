@@ -56,45 +56,66 @@ class Warrior extends Character {
 
 const warrior1 = new Warrior();
 
-console.log(warrior1);
-const attacking = warrior1.dealDamage(1);
+// console.log(warrior1);
+// const attacking = warrior1.dealDamage(1);
+// console.log(attacking);
+// const defending = warrior1.takeDamage(2);
+// console.log(defending);
 
-console.log(attacking);
+const playerText = document.querySelector("#playerText");
+const enemyText = document.querySelector("#enemyText");
+const npcStat = document.querySelector("#npcStat");
+
+let player;
+let enemy;
 
 function attackButton() {
-  let enemyChoice = Math.floor(Math.random() * 2);
-  if (enemyChoice == 0) {
-    num = "draw";
-  } else if (enemyChoice == 1) {
-    num = "lose";
-  } else {
-    num = "win";
-  }
-
+  player = "Attack";
+  console.log(player);
   // const defending = warrior1.takeDamage(2);
   // console.log(defending);
 }
 
 function defendButton() {
-  console.log("defend");
+  player = "Defend";
+
+  console.log(player);
 }
 
 function quickButton() {
-  console.log("quick");
+  player = "Quick Attack";
+  console.log(player);
 }
 
-// win/lose/draw conditions
-switch (num) {
-  case "win":
-    // win
-    console.log("win");
-    break;
-  case "lose":
-    // lose
-    console.log("lose");
-    break;
-  case "draw":
-    // draw
-    console.log("draw");
-    break;
+function enemyTurn() {
+  const num = Math.floor(Math.random() * 3) + 1;
+  switch (num) {
+    case 1:
+      enemy = "Attack";
+      break;
+    case 2:
+      enemy = "Defend";
+      break;
+    case 3:
+      enemy = "Quick Attack";
+      break;
+  }
+}
+
+function conditionWinLose() {
+  if (player == enemy) {
+    return "Draw";
+  } else if (
+    (player == "Attack" && enemy == "Quick Attack") ||
+    (player == "Quick Attack" && enemy == "Defend") ||
+    (player == "Defend" && enemy == "Attack")
+  ) {
+    return "You deal damage";
+  } else if (
+    (player == "Attack" && enemy == "Defend") ||
+    (player == "Defend" && enemy == "Quick Attack") ||
+    (player == "Quick Attack" && enemy == "Attack")
+  ) {
+    return "You take damage";
+  }
 }
