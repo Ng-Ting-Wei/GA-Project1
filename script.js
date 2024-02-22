@@ -78,12 +78,11 @@ let soldierEnemy = new Character({
 });
 
 function playerStat() {
-  return `Character: ${warriorPlayer.name} lvl ${level} | Health: ${warriorPlayer.hp} | Attack: ${warriorPlayer.damage} | Defense: ${warriorPlayer.defense} | Speed: ${warriorPlayer.speed}`;
+  playerStatText.textContent = `Character: ${warriorPlayer.name} lvl ${level} | Health: ${warriorPlayer.hp} | Attack: ${warriorPlayer.damage} | Defense: ${warriorPlayer.defense} | Speed: ${warriorPlayer.speed}`;
 }
 
 function playerLost() {
   if (warriorPlayer.hp <= 0) {
-    console.log("you died");
     attButton.disabled = true;
     defButton.disabled = true;
     quickButton.disabled = true;
@@ -117,9 +116,24 @@ function experiencePlayer() {
     warriorPlayer.Experience -= limit;
     limit = limit * 3;
     level += 1;
-    playerStat();
   }
 }
+
+restartButton.addEventListener("click", function (event) {
+  warriorPlayer = new Character({
+    name: "Regulius",
+    hp: 12,
+    damage: 5,
+    defense: 5,
+    speed: 5,
+  });
+  attButton.disabled = false;
+  defButton.disabled = false;
+  quickButton.disabled = false;
+  restartButton.disabled = true;
+  restartButton.style.visibility = "hidden";
+  restartScreenText.style.visibility = "hidden";
+});
 
 attButton.addEventListener("click", function (event) {
   player = "Attack";
@@ -128,6 +142,7 @@ attButton.addEventListener("click", function (event) {
   enemyText.textContent = `Enemy: ${enemy}`;
   npcNew.textContent = "";
   npcStat.textContent = conditionWinLose();
+  playerStat();
 });
 
 defButton.addEventListener("click", function (event) {
@@ -137,6 +152,7 @@ defButton.addEventListener("click", function (event) {
   enemyText.textContent = `Enemy: ${enemy}`;
   npcNew.textContent = "";
   npcStat.textContent = conditionWinLose();
+  playerStat();
 });
 
 quickButton.addEventListener("click", function (event) {
@@ -146,6 +162,7 @@ quickButton.addEventListener("click", function (event) {
   enemyText.textContent = `Enemy: ${enemy}`;
   npcNew.textContent = "";
   npcStat.textContent = conditionWinLose();
+  playerStat();
 });
 
 function enemyTurn() {
