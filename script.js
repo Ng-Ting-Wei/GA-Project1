@@ -82,7 +82,7 @@ function playerStat() {
 }
 
 function playerLost() {
-  if (warriorPlayer.hp <= 0) {
+  if (warriorPlayer.hp <= 0 || warriorPlayer.hp - soldierEnemy.damage <= 0) {
     attButton.disabled = true;
     defButton.disabled = true;
     quickButton.disabled = true;
@@ -94,7 +94,7 @@ function playerLost() {
 
 // random stat generation
 function gameSet() {
-  if (soldierEnemy.hp <= 0) {
+  if (soldierEnemy.hp <= 0 || soldierEnemy.hp - warriorPlayer.damage <= 0) {
     soldierEnemy = new Character({
       name: "Soldier",
       hp: Math.floor(Math.random() * 4) + 1,
@@ -133,6 +133,15 @@ restartButton.addEventListener("click", function (event) {
   restartButton.disabled = true;
   restartButton.style.visibility = "hidden";
   restartScreenText.style.visibility = "hidden";
+  playerStat();
+  level = 1;
+  limit = 3;
+  score = 0;
+  playerText.textContent = `Player: `;
+  enemyText.textContent = `Enemy: `;
+  npcNew.textContent = "";
+  npcStat.textContent = "";
+  scoreText.textContent = `Score: ${score} | Experience: ${warriorPlayer.Experience}`;
 });
 
 attButton.addEventListener("click", function (event) {
