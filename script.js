@@ -23,6 +23,7 @@ let limit = 3;
 let score = 0;
 let player;
 let enemy;
+let typeDefense;
 
 restartButton.disabled = true;
 restartButton.style.visibility = "hidden";
@@ -54,9 +55,9 @@ class Character {
   getHealth() {
     return this.hp;
   }
-  attack(charc) {
-    charc.hp = charc.hp - this.damage;
-    return `${this.name} deal ${this.damage} damage to ${charc.name}`;
+  attack(charc, type) {
+    charc.hp = charc.hp - type;
+    return `${this.name} deal ${type} damage to ${charc.name}`;
   }
   defend(charc) {
     this.hp = this.hp - charc.damage;
@@ -140,8 +141,8 @@ restartButton.addEventListener("click", function (event) {
     name: "Regulius",
     hp: 12,
     damage: 5,
-    defense: 5,
-    speed: 5,
+    defense: 4,
+    speed: 3,
   });
   attButton.disabled = false;
   defButton.disabled = false;
@@ -162,6 +163,7 @@ restartButton.addEventListener("click", function (event) {
 
 attButton.addEventListener("click", function (event) {
   player = "Attack";
+  typeDefense = warriorPlayer.damage;
   enemyTurn();
   playerText.textContent = `Player: ${player}`;
   enemyText.textContent = `Enemy: ${enemy}`;
@@ -172,6 +174,7 @@ attButton.addEventListener("click", function (event) {
 
 defButton.addEventListener("click", function (event) {
   player = "Defend";
+  typeDefense = warriorPlayer.defense;
   enemyTurn();
   playerText.textContent = `Player: ${player}`;
   enemyText.textContent = `Enemy: ${enemy}`;
@@ -182,6 +185,7 @@ defButton.addEventListener("click", function (event) {
 
 quickButton.addEventListener("click", function (event) {
   player = "Quick Attack";
+  typeDefense = warriorPlayer.speed;
   enemyTurn();
   playerText.textContent = `Player: ${player}`;
   enemyText.textContent = `Enemy: ${enemy}`;
@@ -214,7 +218,7 @@ function conditionWinLose() {
     (player == "Defend" && enemy == "Attack")
   ) {
     gameSet();
-    return warriorPlayer.attack(soldierEnemy);
+    return warriorPlayer.attack(soldierEnemy, typeDefense);
   } else if (
     (player == "Attack" && enemy == "Defend") ||
     (player == "Defend" && enemy == "Quick Attack") ||
