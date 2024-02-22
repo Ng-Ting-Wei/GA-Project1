@@ -5,16 +5,24 @@ const playerStatText = document.getElementById("playerStat");
 const playerText = document.getElementById("playerText");
 const enemyText = document.getElementById("enemyText");
 const npcStat = document.getElementById("npcStat");
+const npcNew = document.getElementById("npcNew");
+const restartScreenText = document.getElementById("restartScreenText");
 
 const attButton = document.querySelector("#attButton");
 const defButton = document.querySelector("#defButton");
-const quickbutton = document.querySelector("#quickbutton");
+const quickButton = document.querySelector("#quickButton");
+const restartButton = document.querySelector("#restartButton");
 
 let level = 1;
 let limit = 3;
+let highScore = 0;
 let score = 0;
 let player;
 let enemy;
+
+restartButton.disabled = true;
+restartButton.style.visibility = "hidden";
+restartScreenText.style.visibility = "hidden";
 
 // create two player can also well
 // level up system
@@ -73,6 +81,18 @@ function playerStat() {
   return `Character: ${warriorPlayer.name} lvl ${level} | Health: ${warriorPlayer.hp} | Attack: ${warriorPlayer.damage} | Defense: ${warriorPlayer.defense} | Speed: ${warriorPlayer.speed}`;
 }
 
+function playerLost() {
+  if (warriorPlayer.hp <= 0) {
+    console.log("you died");
+    attButton.disabled = true;
+    defButton.disabled = true;
+    quickButton.disabled = true;
+    restartButton.disabled = false;
+    restartButton.style.visibility = "visible";
+    restartScreenText.style.visibility = "visible";
+  }
+}
+
 // random stat generation
 function gameSet() {
   if (soldierEnemy.hp <= 0) {
@@ -83,19 +103,19 @@ function gameSet() {
       defense: Math.floor(Math.random() * 3) + 1,
       speed: Math.floor(Math.random() * 3) + 1,
     });
-    warriorPlayer.Experience += Math.floor(Math.random() * 2) + 1;
-    experiencePlayer(warriorPlayer.Experience);
     score += 1;
+    warriorPlayer.Experience += 1;
+    experiencePlayer();
     scoreText.textContent = `Score: ${score} | Experience: ${warriorPlayer.Experience}`;
-    return `Soldier was defeated! More Soldier arrived!`;
+    npcNew.textContent = `Soldier was defeated! More Soldier arrived!`;
   }
 }
 
-function experiencePlayer(amount) {
-  let exp = amount / limit;
+function experiencePlayer() {
+  let exp = warriorPlayer.Experience / limit;
   if (exp == 1) {
     warriorPlayer.Experience -= limit;
-    limit *= 3;
+    limit = limit * 3;
     level += 1;
     playerStat();
   }
@@ -106,6 +126,7 @@ attButton.addEventListener("click", function (event) {
   enemyTurn();
   playerText.textContent = `Player: ${player}`;
   enemyText.textContent = `Enemy: ${enemy}`;
+  npcNew.textContent = "";
   npcStat.textContent = conditionWinLose();
 });
 
@@ -114,14 +135,16 @@ defButton.addEventListener("click", function (event) {
   enemyTurn();
   playerText.textContent = `Player: ${player}`;
   enemyText.textContent = `Enemy: ${enemy}`;
+  npcNew.textContent = "";
   npcStat.textContent = conditionWinLose();
 });
 
-quickbutton.addEventListener("click", function (event) {
+quickButton.addEventListener("click", function (event) {
   player = "Quick Attack";
   enemyTurn();
   playerText.textContent = `Player: ${player}`;
   enemyText.textContent = `Enemy: ${enemy}`;
+  npcNew.textContent = "";
   npcStat.textContent = conditionWinLose();
 });
 
@@ -148,15 +171,14 @@ function conditionWinLose() {
     (player == "Quick Attack" && enemy == "Defend") ||
     (player == "Defend" && enemy == "Attack")
   ) {
-    return warriorPlayer.attack(soldierEnemy), gameSet();
+    gameSet();
+    return warriorPlayer.attack(soldierEnemy);
   } else if (
     (player == "Attack" && enemy == "Defend") ||
     (player == "Defend" && enemy == "Quick Attack") ||
     (player == "Quick Attack" && enemy == "Attack")
   ) {
+    playerLost();
     return warriorPlayer.defend(soldierEnemy);
   }
 }
-
-// done at start
-playerStatText.textContent = playerStat();
