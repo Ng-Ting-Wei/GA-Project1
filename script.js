@@ -1,5 +1,6 @@
 // created variables
 const scoreText = document.getElementById("score");
+const highScoreText = document.getElementById("highScore");
 const playerStatText = document.getElementById("playerStat");
 
 const playerText = document.getElementById("playerText");
@@ -13,9 +14,12 @@ const defButton = document.querySelector("#defButton");
 const quickButton = document.querySelector("#quickButton");
 const restartButton = document.querySelector("#restartButton");
 
+// Create high score variable. Retrieve existing high score but if
+// it doesn't exist, then create high score and set it to zero
+let highScore = localStorage.getItem("myhighscore") || 0;
+
 let level = 1;
 let limit = 3;
-let highScore = 0;
 let score = 0;
 let player;
 let enemy;
@@ -107,6 +111,18 @@ function gameSet() {
     experiencePlayer();
     scoreText.textContent = `Score: ${score} | Experience: ${warriorPlayer.Experience}`;
     npcNew.textContent = `Soldier was defeated! More Soldier arrived!`;
+    settingHighScore();
+  }
+}
+function settingHighScore() {
+  // Check if player has beaten high score
+  if (score > highScore) {
+    // Set in-game high score variable to current score
+    highScore = score;
+    // Update to display new high score
+    highScoreText.textContent = `Highscore: ${highScore}`;
+    // Store high score permanently on player's computer
+    localStorage.setItem("myhighscore", highScore);
   }
 }
 
