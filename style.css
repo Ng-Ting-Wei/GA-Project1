@@ -176,3 +176,19 @@ body {
   bottom: 500px;
   background-color: grey;
 }
+
+.idleImage {
+  width: 80px;
+  height: 80px;
+  position: relative;
+  bottom: 350px;
+  left: 280px;
+  background: url("image/idle.png") left center;
+  animation: play 0.9s steps(4) infinite;
+}
+
+@keyframes play {
+  100% {
+    background-position: 290px;
+  }
+}
