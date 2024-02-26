@@ -5,7 +5,7 @@ The gameplay is clicking on the respective buttons to beat the guards, and when 
 
 # Screenshot
 
-![Alt text](GitHub/GA-Project1/Start.png)
+![Alt text](/Start.png)
 
 # Technologies Used
 
