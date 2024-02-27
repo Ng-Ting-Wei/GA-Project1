@@ -13,6 +13,9 @@ JavaScript
 HTML
 CSS
 
+# Getting Started
+[Click to Play Connect Four!] https://ng-ting-wei.github.io/GA-Project1/
+
 # Next Steps
 
 Future enhancement one: animation or image
