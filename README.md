@@ -14,7 +14,7 @@ HTML
 CSS
 
 # Getting Started
-[Click to Play Connect Four!] https://ng-ting-wei.github.io/GA-Project1/
+[Click to Play Connect Four!] (https://ng-ting-wei.github.io/GA-Project1/)
 
 # Next Steps
 
